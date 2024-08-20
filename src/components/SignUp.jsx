@@ -34,7 +34,7 @@ function SignUp() {
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const res = await axios.post('https://day-41-back-end-xxd9.onrender.com/api/register', values);
+        await axios.post('https://day-41-back-end-xxd9.onrender.com/api/register', values);
         setSnackbar({
           open: true,
           message: 'Registration successful!',
