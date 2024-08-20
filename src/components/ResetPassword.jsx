@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, Container, Typography, Snackbar, Slide, Alert } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+  Box,
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Snackbar,
+  Slide,
+  Alert,
+} from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
-function SlideTransition(props) {
-  return <Slide {...props} direction="right" />;
-}
+const SlideTransition = (props) => <Slide {...props} direction="right" />;
 
-function ResetPassword() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const ResetPassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [snackbar, setSnackbar] = useState({
     open: false,
-    message: '',
+    message: "",
     Transition: SlideTransition,
   });
 
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  const token = queryParams.get("token");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,19 +40,22 @@ function ResetPassword() {
     }
 
     try {
-      await axios.patch(`https://day-41-back-end-xxd9.onrender.com/api/reset-password/${token}`, {
-        password,
-      });
+      await axios.patch(
+        `https://day-41-back-end-xxd9.onrender.com/api/reset-password/${token}`,
+        {
+          password,
+        }
+      );
       setSnackbar({
         open: true,
-        message: 'Password reset successfully!',
+        message: "Password reset successfully!",
         Transition: SlideTransition,
       });
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
       setSnackbar({
         open: true,
-        message: err.response.data.message || 'Server error. Please try again.',
+        message: err.response.data.message || "Server error. Please try again.",
         Transition: SlideTransition,
       });
     }
@@ -60,9 +70,9 @@ function ResetPassword() {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -87,7 +97,12 @@ function ResetPassword() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Reset Password
           </Button>
         </Box>
@@ -97,15 +112,20 @@ function ResetPassword() {
         onClose={handleClose}
         TransitionComponent={snackbar.Transition}
         message={snackbar.message}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={6000}
       >
-        <Alert onClose={handleClose} severity="error" variant="filled" sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>
     </Container>
   );
-}
+};
 
 export default ResetPassword;

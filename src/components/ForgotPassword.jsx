@@ -1,52 +1,67 @@
-import React from 'react'
-import { Box, TextField, Button, Container,CssBaseline, Typography, Snackbar, Slide, Alert } from '@mui/material'
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+  Box,
+  TextField,
+  Button,
+  Container,
+  CssBaseline,
+  Typography,
+  Snackbar,
+  Slide,
+  Alert,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function SlideTransition(props) {
-  return <Slide {...props} direction="right" />;
-}
+const SlideTransition = (props) => <Slide {...props} direction="right" />;
 
-function ForgotPassword() {
+const ForgotPassword = () => {
+  const navigate = useNavigate();
 
-  const [snackbar, setSnackbar] = React.useState({
+  const [snackbar, setSnackbar] = useState({
     open: false,
-    message: '',
+    message: "",
     Transition: SlideTransition,
-});
-  const [isError, setIsError] = React.useState(false);
+  });
+  const [isError, setIsError] = useState(false);
 
-    const handleSubmit = async (event) => {
-      try {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const email = data.get('email');
-        // Send email to the user with a reset link
-        await axios.post('https://day-41-back-end-xxd9.onrender.com/api/forgot-password', {"email":email})
-        setSnackbar({
-            open: true,
-            message: 'Check your email for the password reset link.',
-            Transition: SlideTransition,
-        });
-        setIsError(false);
-        return;
-      }catch (err){
-        setSnackbar({
-            open: true,
-            message: err.response.data.message || 'Server error. Please try again.',
-            Transition: SlideTransition,
-        });
-        setIsError(true);
-        console.error(err);
-        return;
-      }
-    };
-    const handleClose = () => {
-        setSnackbar({
-            ...snackbar,
-            open: false,
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const email = data.get("email");
+      // Send email to the user with a reset link
+      await axios.post(
+        "https://day-41-back-end-xxd9.onrender.com/api/forgot-password",
+        { email: email }
+      );
+      setSnackbar({
+        open: true,
+        message: "Check your email for the password reset link.",
+        Transition: SlideTransition,
       });
-    };
-    
+      setIsError(false);
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    } catch (err) {
+      setSnackbar({
+        open: true,
+        message: err.response.data.message || "Server error. Please try again.",
+        Transition: SlideTransition,
+      });
+      setIsError(true);
+      console.error(err);
+      return;
+    }
+  };
+  const handleClose = () => {
+    setSnackbar({
+      ...snackbar,
+      open: false,
+    });
+  };
+
   return (
     <div>
       <Container maxWidth="sm">
@@ -54,13 +69,20 @@ function ForgotPassword() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-        <Typography component="h1" variant="h5">Forgot Password</Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Typography component="h1" variant="h5">
+            Forgot Password
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -79,28 +101,28 @@ function ForgotPassword() {
             >
               Send Reset Link
             </Button>
-        </Box>
+          </Box>
         </Box>
       </Container>
-        <Snackbar
-                open={snackbar.open}
-                onClose={handleClose}
-                TransitionComponent={snackbar.Transition}
-                message={snackbar.message}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                autoHideDuration={6000}
-            >
-                <Alert
-                    onClose={handleClose}
-                    severity= {isError? "error":"success"}
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
+      <Snackbar
+        open={snackbar.open}
+        onClose={handleClose}
+        TransitionComponent={snackbar.Transition}
+        message={snackbar.message}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={isError ? "error" : "success"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
