@@ -66,92 +66,104 @@ export default function Login() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={LoginFormik.handleSubmit}
+            noValidate
+            sx={{ mt: 1, width: "100%" }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={LoginFormik.values.email}
+              onChange={LoginFormik.handleChange}
+              onBlur={LoginFormik.handleBlur}
+              error={
+                LoginFormik.touched.email && Boolean(LoginFormik.errors.email)
+              }
+              helperText={LoginFormik.touched.email && LoginFormik.errors.email}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={LoginFormik.values.password}
+              onChange={LoginFormik.handleChange}
+              onBlur={LoginFormik.handleBlur}
+              error={
+                LoginFormik.touched.password &&
+                Boolean(LoginFormik.errors.password)
+              }
+              helperText={
+                LoginFormik.touched.password && LoginFormik.errors.password
+              }
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <Box
-                    component="form"
-                    onSubmit={LoginFormik.handleSubmit}
-                    noValidate
-                    sx={{ mt: 1, width: '100%' }}
-                >
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        value={LoginFormik.values.email}
-                        onChange={LoginFormik.handleChange}
-                        onBlur={LoginFormik.handleBlur}
-                        error={LoginFormik.touched.email && Boolean(LoginFormik.errors.email)}
-                        helperText={LoginFormik.touched.email && LoginFormik.errors.email}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={LoginFormik.values.password}
-                        onChange={LoginFormik.handleChange}
-                        onBlur={LoginFormik.handleBlur}
-                        error={LoginFormik.touched.password && Boolean(LoginFormik.errors.password)}
-                        helperText={LoginFormik.touched.password && LoginFormik.errors.password}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link to="/forgot-password" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Box>
-            <Snackbar
-                open={snackbar.open}
-                onClose={handleClose}
-                TransitionComponent={snackbar.Transition}
-                message={snackbar.message}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                autoHideDuration={6000}
-            >
-                <Alert
-                    onClose={handleClose}
-                    severity="error"
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
-        </Container>
+              Sign In
+            </Button>
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Link to="/forgot-password" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Snackbar
+          open={snackbar.open}
+          onClose={handleClose}
+          TransitionComponent={snackbar.Transition}
+          message={snackbar.message}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          autoHideDuration={6000}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Container>
     );
 }
