@@ -27,7 +27,7 @@ function ForgotPassword() {
             message: 'Check your email for the password reset link.',
             Transition: SlideTransition,
         });
-        isError(false);
+        setIsError(false);
         return;
       }catch (err){
         setSnackbar({
@@ -35,7 +35,7 @@ function ForgotPassword() {
             message: err.response.data.message || 'Server error. Please try again.',
             Transition: SlideTransition,
         });
-        isError(true);
+        setIsError(true);
         console.error(err);
         return;
       }
