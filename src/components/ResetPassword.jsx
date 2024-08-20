@@ -33,7 +33,7 @@ function ResetPassword() {
     }
 
     try {
-      await axios.patch(`http://localhost:5000/api/reset-password/${token}`, {
+      await axios.patch(`https://day-41-back-end-xxd9.onrender.com/api/reset-password/${token}`, {
         password,
       });
       setSnackbar({

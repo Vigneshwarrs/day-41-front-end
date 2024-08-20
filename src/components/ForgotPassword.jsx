@@ -20,7 +20,7 @@ function ForgotPassword() {
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
         // Send email to the user with a reset link
-        await axios.post('http://localhost:5000/api/forgot-password', {"email":email})
+        await axios.post('https://day-41-back-end-xxd9.onrender.com/api/forgot-password', {"email":email})
         setSnackbar({
             open: true,
             message: 'Check your email for the password reset link.',
