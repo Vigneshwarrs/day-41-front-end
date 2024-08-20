@@ -13,6 +13,7 @@ function ForgotPassword() {
     message: '',
     Transition: SlideTransition,
 });
+  const [isError, setIsError] = React.useState(false);
 
     const handleSubmit = async (event) => {
       try {
@@ -26,6 +27,7 @@ function ForgotPassword() {
             message: 'Check your email for the password reset link.',
             Transition: SlideTransition,
         });
+        isError(false);
         return;
       }catch (err){
         setSnackbar({
@@ -33,6 +35,7 @@ function ForgotPassword() {
             message: err.response.data.message || 'Server error. Please try again.',
             Transition: SlideTransition,
         });
+        isError(true);
         console.error(err);
         return;
       }
@@ -89,7 +92,7 @@ function ForgotPassword() {
             >
                 <Alert
                     onClose={handleClose}
-                    severity="error"
+                    severity= {isError? "error":"success"}
                     variant="filled"
                     sx={{ width: '100%' }}
                 >
